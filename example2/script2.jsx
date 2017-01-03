@@ -1,5 +1,8 @@
-var Card = React.createClass({
-    render: function(){
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+class Card extends React.Component {
+    render() {
         return (
             <div>
                 <img src="https://avatars.githubusercontent.com/u/12782881?v=3" />
@@ -8,15 +11,16 @@ var Card = React.createClass({
             </div>
         );
     }
-})
-var Main = React.createClass({
-    render: function () {
+}
+
+class Main extends React.Component {
+    render() {
         return (
             <div>
                 <Card />
             </div>
         )
     }
-})
+}
 
 ReactDOM.render(<Main />, document.getElementById("root"));
