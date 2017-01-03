@@ -8,6 +8,7 @@
     "url": "git+https://github.com/Krzysiek102/ReactJsGettingStarted.git"
   },
   "scripts": {
+    "start": "webpack-dev-server --progress --colors",
     "postinstall": "typings install"
   },
   "license": "ISC",
