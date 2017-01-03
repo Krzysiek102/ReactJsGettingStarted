@@ -14,5 +14,9 @@
   "bugs": {
     "url": "https://github.com/Krzysiek102/ReactJsGettingStarted/issues"
   },
-  "homepage": "https://github.com/Krzysiek102/ReactJsGettingStarted#readme"
+  "homepage": "https://github.com/Krzysiek102/ReactJsGettingStarted#readme",
+  "dependencies": {
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1"
+  }
 }
