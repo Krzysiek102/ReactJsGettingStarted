@@ -23,11 +23,19 @@ class Card extends React.Component {
 }
 
 class Main extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            logins: ['zpao', 'fisherwebdev']
+        };
+    }    
     render() {
+        let cards = this.state.logins.map(function(login){
+        return (<Card key={login} login={login} />);
+        });
         return (
             <div>
-                <Card login='spicyj' />
-                <Card login='petehunt' />
+                {cards}
             </div>
         )
     }
