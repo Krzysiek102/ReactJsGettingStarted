@@ -22,6 +22,17 @@ class Card extends React.Component {
     }
 }
 
+class Form extends React.Component {
+    render(){
+        return(
+            <form>
+                <input placeholder="github login" ref="login"/>
+                <button>Add</button>
+            </form>
+        );
+    }
+}
+
 class Main extends React.Component {
     constructor(props) {
         super(props);
@@ -31,10 +42,11 @@ class Main extends React.Component {
     }    
     render() {
         let cards = this.state.logins.map(function(login){
-        return (<Card key={login} login={login} />);
+            return (<Card key={login} login={login} />);
         });
         return (
             <div>
+                <Form />
                 {cards}
             </div>
         )
