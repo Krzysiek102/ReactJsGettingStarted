@@ -7,8 +7,8 @@ class Card extends React.Component {
         super(props);
         this.state = {};
     }
-    componentDidMount(){
-        $.get("http://api.github.com/users/petehunt", data => this.setState(data));
+    componentDidMount() {
+        $.get(`http://api.github.com/users/${this.props.login}`, data => this.setState(data));
     }
 
     render() {
@@ -26,6 +26,7 @@ class Main extends React.Component {
     render() {
         return (
             <div>
+                <Card login='spicyj' />
                 <Card login='petehunt' />
             </div>
         )
