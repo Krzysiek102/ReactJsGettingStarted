@@ -5,16 +5,12 @@ import ReactDOM from 'react-dom';
 class Card extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            
-        };
+        this.state = {};
     }
     componentDidMount(){
-        var component = this;
-        $.get("http://api.github.com/users/petehunt", function(data){
-            component.setState(data);
-        });
-    }  
+        $.get("http://api.github.com/users/petehunt", data => this.setState(data));
+    }
+
     render() {
         return (
             <div>
