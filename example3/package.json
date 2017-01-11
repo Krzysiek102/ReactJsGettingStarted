@@ -1,0 +1,30 @@
+{
+  "name": "reactjsgettingstarted",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Krzysiek102/ReactJsGettingStarted.git"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --progress --colors",
+    "postinstall": "typings install"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Krzysiek102/ReactJsGettingStarted/issues"
+  },
+  "homepage": "https://github.com/Krzysiek102/ReactJsGettingStarted#readme",
+  "dependencies": {
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "webpack": "^1.14.0"
+  }
+}
