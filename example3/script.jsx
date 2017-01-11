@@ -6,7 +6,7 @@ class StarsFrame extends React.Component {
         return (
             <div id="stars-frame">
                 <div className="well">
-                    <span className="glypicon glyphicon-star" />
+                    <span className="glyphicon glyphicon-star" />
                 </div>
             </div>
         );
