@@ -4,8 +4,12 @@ import ReactDOM from 'react-dom';
 class StarsFrame extends React.Component {
     render() {
         return (
-            <div id="stars-frame">
+            <div className="stars-frame">
                 <div className="well">
+                    <span className="glyphicon glyphicon-star" />
+                    <span className="glyphicon glyphicon-star" />
+                    <span className="glyphicon glyphicon-star" />
+                    <span className="glyphicon glyphicon-star" />
                     <span className="glyphicon glyphicon-star" />
                 </div>
             </div>
@@ -16,8 +20,8 @@ class StarsFrame extends React.Component {
 class ButtonFrame extends React.Component {
     render() {
         return (
-            <div>
-                ...
+            <div className="button-frame">
+                <button className="btn btn-primary">=</button>
             </div>
         );
     }
@@ -26,8 +30,10 @@ class ButtonFrame extends React.Component {
 class AnswerFrame extends React.Component {
     render() {
         return (
-            <div>
-                ...
+            <div className="answer-frame">
+                <div className="well">
+                    ...
+                </div>
             </div>
         );
     }
