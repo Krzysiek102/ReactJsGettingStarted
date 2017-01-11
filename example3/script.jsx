@@ -21,7 +21,7 @@ class ButtonFrame extends React.Component {
     render() {
         return (
             <div className="button-frame">
-                <button className="btn btn-primary">=</button>
+                <button className="btn btn-primary btn-lg">=</button>
             </div>
         );
     }
@@ -44,10 +44,12 @@ class Game extends React.Component {
         return (
             <div id="game">
                 <h2>Play Nine</h2>
-                <StarsFrame />
-                <ButtonFrame />
-                <AnswerFrame />
-
+                <hr />
+                <div className="clearfix">
+                    <StarsFrame />
+                    <ButtonFrame />
+                    <AnswerFrame />                
+                </div>
             </div>
         );
     }
