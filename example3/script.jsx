@@ -29,23 +29,23 @@ class ButtonFrame extends React.Component {
             case true:
                 button = (
                     <button className="btn btn-success btn-lg"
-                            onClick={this.props.acceptAnswer}>
+                        onClick={this.props.acceptAnswer}>
                         <span className="glyphicon glyphicon-ok" />
                     </button>
-                );            
+                );
                 break;
             case false:
                 button = (
                     <button className="btn btn-danger btn-lg">
                         <span className="glyphicon glyphicon-remove" />
                     </button>
-                );              
+                );
                 break;
             default:
                 disabled = this.props.selectedNumbers.length === 0;
                 button = (
                     <button className="btn btn-primary btn-lg" disabled={disabled}
-                    onClick={this.props.checkAnswer}>
+                        onClick={this.props.checkAnswer}>
                         =
                     </button>
                 );
@@ -54,6 +54,14 @@ class ButtonFrame extends React.Component {
         return (
             <div className="button-frame">
                 {button}
+                <br /><br />
+                <button className="btn btn-warning btn-xs"
+                    onClick={this.props.redraw}
+                    disabled={this.props.redraws === 0}>
+                    <span className="glyphicon glyphicon-refresh" />
+                    &nbsp;
+                    {this.props.redraws}
+                </button>
             </div>
         );
     }
@@ -85,7 +93,7 @@ class NumbersFrame extends React.Component {
         let className;
         for (let i = 1; i <= 9; i++) {
             className = `number selected-${this.props.selectedNumbers.indexOf(i) >= 0} `;
-            className += `used-${this.props.usedNumbers.indexOf(i)>=0}`;
+            className += `used-${this.props.usedNumbers.indexOf(i) >= 0}`;
             numbers.push(
                 <div className={className} onClick={this.props.selectNumber.bind(null, i)} key={i}>
                     {i}
@@ -106,8 +114,9 @@ class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            numberOfStars: Math.floor(Math.random() * 9) + 1,
+            numberOfStars: this.randomNumber(),
             usedNumbers: [],
+            redraws: 5,
             selectedNumbers: [],
         };
         this.selectNumber = this.selectNumber.bind(this);
@@ -115,8 +124,14 @@ class Game extends React.Component {
         this.sumOfSelectedNumbers = this.sumOfSelectedNumbers.bind(this);
         this.checkAnswer = this.checkAnswer.bind(this);
         this.acceptAnswer = this.acceptAnswer.bind(this);
-
+        this.redraw = this.redraw.bind(this);
+        this.randomNumber = this.randomNumber.bind(this);
     }
+
+    randomNumber(){
+        return Math.floor(Math.random() * 9) + 1;
+    }
+
     selectNumber(clickedNumber) {
         if (this.state.selectedNumbers.indexOf(clickedNumber) < 0) {
             this.setState({
@@ -147,14 +162,25 @@ class Game extends React.Component {
         this.setState({ correct: correct });
     }
 
-    acceptAnswer(){
+    acceptAnswer() {
         let usedNumbers = this.state.usedNumbers.concat(this.state.selectedNumbers);
         this.setState({
             selectedNumbers: [],
             usedNumbers: usedNumbers,
             correct: null,
-            numberOfStars: Math.floor(Math.random()*9)+1
+            numberOfStars: this.randomNumber()
         });
+    }
+
+    redraw() {
+        if (this.state.redraws > 0) {
+            this.setState({
+                numberOfStars: this.randomNumber(),
+                correct: null,
+                selectedNumbers: [],
+                redraws: this.state.redraws - 1
+            });
+        }
     }
 
     render() {
@@ -162,6 +188,7 @@ class Game extends React.Component {
         let numberOfStars = this.state.numberOfStars;
         let correct = this.state.correct;
         let usedNumbers = this.state.usedNumbers;
+        let redraws = this.state.redraws;
         return (
             <div id="game">
                 <h2>Play Nine</h2>
@@ -170,8 +197,11 @@ class Game extends React.Component {
                     <StarsFrame numberOfStars={numberOfStars} />
                     <ButtonFrame selectedNumbers={selectedNumbers}
                         correct={correct}
-                        checkAnswer={this.checkAnswer} 
-                        acceptAnswer={this.acceptAnswer} />
+                        checkAnswer={this.checkAnswer}
+                        acceptAnswer={this.acceptAnswer}
+                        redraw={this.redraw}
+                        redraws={redraws}
+                        />
                     <AnswerFrame selectedNumbers={selectedNumbers}
                         unselectNumber={this.unselectNumber} />
                 </div>
