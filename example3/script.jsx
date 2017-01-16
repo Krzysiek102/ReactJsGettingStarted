@@ -251,6 +251,7 @@ class Game extends React.Component {
         let usedNumbers = this.state.usedNumbers;
         let redraws = this.state.redraws;
         let doneStatus = this.state.doneStatus;
+        let resetGame = this.state.resetGame;
         let bottomFrame;
 
         if (doneStatus) {
