@@ -28,7 +28,8 @@ class ButtonFrame extends React.Component {
         switch (correct) {
             case true:
                 button = (
-                    <button className="btn btn-success btn-lg">
+                    <button className="btn btn-success btn-lg"
+                            onClick={this.props.acceptAnswer}>
                         <span className="glyphicon glyphicon-ok" />
                     </button>
                 );            
@@ -83,7 +84,8 @@ class NumbersFrame extends React.Component {
         let numbers = [];
         let className;
         for (let i = 1; i <= 9; i++) {
-            className = `number selected-${this.props.selectedNumbers.indexOf(i) >= 0}`;
+            className = `number selected-${this.props.selectedNumbers.indexOf(i) >= 0} `;
+            className += `used-${this.props.usedNumbers.indexOf(i)>=0}`;
             numbers.push(
                 <div className={className} onClick={this.props.selectNumber.bind(null, i)} key={i}>
                     {i}
@@ -105,18 +107,21 @@ class Game extends React.Component {
         super(props);
         this.state = {
             numberOfStars: Math.floor(Math.random() * 9) + 1,
+            usedNumbers: [],
             selectedNumbers: [],
         };
         this.selectNumber = this.selectNumber.bind(this);
         this.unselectNumber = this.unselectNumber.bind(this);
         this.sumOfSelectedNumbers = this.sumOfSelectedNumbers.bind(this);
         this.checkAnswer = this.checkAnswer.bind(this);
+        this.acceptAnswer = this.acceptAnswer.bind(this);
 
     }
     selectNumber(clickedNumber) {
         if (this.state.selectedNumbers.indexOf(clickedNumber) < 0) {
             this.setState({
-                selectedNumbers: this.state.selectedNumbers.concat(clickedNumber)
+                selectedNumbers: this.state.selectedNumbers.concat(clickedNumber),
+                correct: null
             });
         }
     }
@@ -142,10 +147,21 @@ class Game extends React.Component {
         this.setState({ correct: correct });
     }
 
+    acceptAnswer(){
+        let usedNumbers = this.state.usedNumbers.concat(this.state.selectedNumbers);
+        this.setState({
+            selectedNumbers: [],
+            usedNumbers: usedNumbers,
+            correct: null,
+            numberOfStars: Math.floor(Math.random()*9)+1
+        });
+    }
+
     render() {
         let selectedNumbers = this.state.selectedNumbers;
         let numberOfStars = this.state.numberOfStars;
         let correct = this.state.correct;
+        let usedNumbers = this.state.usedNumbers;
         return (
             <div id="game">
                 <h2>Play Nine</h2>
@@ -154,12 +170,14 @@ class Game extends React.Component {
                     <StarsFrame numberOfStars={numberOfStars} />
                     <ButtonFrame selectedNumbers={selectedNumbers}
                         correct={correct}
-                        checkAnswer={this.checkAnswer} />
+                        checkAnswer={this.checkAnswer} 
+                        acceptAnswer={this.acceptAnswer} />
                     <AnswerFrame selectedNumbers={selectedNumbers}
                         unselectNumber={this.unselectNumber} />
                 </div>
                 <NumbersFrame selectedNumbers={selectedNumbers}
                     selectNumber={this.selectNumber}
+                    usedNumbers={usedNumbers}
                     />
             </div>
         );
