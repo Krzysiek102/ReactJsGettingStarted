@@ -21,12 +21,38 @@ class StarsFrame extends React.Component {
 
 class ButtonFrame extends React.Component {
     render() {
-        let disabled = this.props.selectedNumbers.length === 0;
+        let disabled;
+        let button;
+        let correct = this.props.correct;
+
+        switch (correct) {
+            case true:
+                button = (
+                    <button className="btn btn-success btn-lg">
+                        <span className="glyphicon glyphicon-ok" />
+                    </button>
+                );            
+                break;
+            case false:
+                button = (
+                    <button className="btn btn-danger btn-lg">
+                        <span className="glyphicon glyphicon-remove" />
+                    </button>
+                );              
+                break;
+            default:
+                disabled = this.props.selectedNumbers.length === 0;
+                button = (
+                    <button className="btn btn-primary btn-lg" disabled={disabled}
+                    onClick={this.props.checkAnswer}>
+                        =
+                    </button>
+                );
+        }
+
         return (
             <div className="button-frame">
-                <button className="btn btn-primary btn-lg" disabled={disabled}>
-                =
-                </button>
+                {button}
             </div>
         );
     }
@@ -38,7 +64,7 @@ class AnswerFrame extends React.Component {
         let selectedNumbers = props.selectedNumbers.map(function (i) {
             return (
                 <span key={i} onClick={props.unselectNumber.bind(null, i)}>
-                {i}
+                    {i}
                 </span>
             );
         });
@@ -83,6 +109,9 @@ class Game extends React.Component {
         };
         this.selectNumber = this.selectNumber.bind(this);
         this.unselectNumber = this.unselectNumber.bind(this);
+        this.sumOfSelectedNumbers = this.sumOfSelectedNumbers.bind(this);
+        this.checkAnswer = this.checkAnswer.bind(this);
+
     }
     selectNumber(clickedNumber) {
         if (this.state.selectedNumbers.indexOf(clickedNumber) < 0) {
@@ -97,22 +126,37 @@ class Game extends React.Component {
         let indexOfNumber = selectedNumbers.indexOf(clickedNumber);
         selectedNumbers.splice(indexOfNumber, 1);
         this.setState({
-            selectedNumbers:selectedNumbers 
+            selectedNumbers: selectedNumbers,
+            correct: null
         });
-    }    
+    }
+
+    sumOfSelectedNumbers() {
+        return this.state.selectedNumbers.reduce(function (p, n) {
+            return p + n;
+        }, 0);
+    }
+
+    checkAnswer() {
+        let correct = (this.state.numberOfStars === this.sumOfSelectedNumbers());
+        this.setState({ correct: correct });
+    }
 
     render() {
         let selectedNumbers = this.state.selectedNumbers;
         let numberOfStars = this.state.numberOfStars;
+        let correct = this.state.correct;
         return (
             <div id="game">
                 <h2>Play Nine</h2>
                 <hr />
                 <div className="clearfix">
-                    <StarsFrame numberOfStars={numberOfStars}/>
-                    <ButtonFrame selectedNumbers={selectedNumbers} />
-                    <AnswerFrame selectedNumbers={selectedNumbers} 
-                                unselectNumber={this.unselectNumber}/>
+                    <StarsFrame numberOfStars={numberOfStars} />
+                    <ButtonFrame selectedNumbers={selectedNumbers}
+                        correct={correct}
+                        checkAnswer={this.checkAnswer} />
+                    <AnswerFrame selectedNumbers={selectedNumbers}
+                        unselectNumber={this.unselectNumber} />
                 </div>
                 <NumbersFrame selectedNumbers={selectedNumbers}
                     selectNumber={this.selectNumber}
