@@ -70,7 +70,7 @@ class ButtonFrame extends React.Component {
 class AnswerFrame extends React.Component {
     render() {
         let props = this.props;
-        let selectedNumbers = props.selectedNumbers.map(function (i) {
+        let selectedNumbers = props.selectedNumbers.map(i => {
             return (
                 <span key={i} onClick={props.unselectNumber.bind(null, i)}>
                     {i}
@@ -174,7 +174,7 @@ class Game extends React.Component {
     }
 
     sumOfSelectedNumbers() {
-        return this.state.selectedNumbers.reduce(function (p, n) {
+        return this.state.selectedNumbers.reduce((p, n) => {
             return p + n;
         }, 0);
     }
@@ -191,7 +191,7 @@ class Game extends React.Component {
             usedNumbers: usedNumbers,
             correct: null,
             numberOfStars: this.randomNumber()
-        }, function () {
+        }, () => {
             this.updateDoneStatus();
         });
     }
@@ -203,7 +203,7 @@ class Game extends React.Component {
                 correct: null,
                 selectedNumbers: [],
                 redraws: this.state.redraws - 1
-            }, function () {
+            }, () => {
                 this.updateDoneStatus();
             });
         }
