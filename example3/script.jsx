@@ -124,14 +124,8 @@ class DoneFrame extends React.Component {
 class Game extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            numberOfStars: this.randomNumber(),
-            usedNumbers: [],
-            redraws: 5,
-            selectedNumbers: [],
-            correct: null,
-            doneStatus: null
-        };
+        this.state = this.getInitState();
+        this.getInitState = this.getInitState.bind(this);
         this.selectNumber = this.selectNumber.bind(this);
         this.unselectNumber = this.unselectNumber.bind(this);
         this.sumOfSelectedNumbers = this.sumOfSelectedNumbers.bind(this);
@@ -143,6 +137,17 @@ class Game extends React.Component {
         this.possibleSolutions = this.possibleSolutions.bind(this);
         this.possibleCombinationSum = this.possibleCombinationSum.bind(this);
         this.resetGame = this.resetGame.bind(this);
+    }
+
+    getInitState(){
+        return {
+            numberOfStars: this.randomNumber(),
+            usedNumbers: [],
+            redraws: 5,
+            selectedNumbers: [],
+            correct: null,
+            doneStatus: null
+        }
     }
 
     randomNumber() {
@@ -229,10 +234,10 @@ class Game extends React.Component {
             arr.pop();
             return possibleCombinationSum(arr, n);
         }
-        var listSize = arr.length, combinationsCount = (1 << listSize)
-        for (var i = 1; i < combinationsCount; i++) {
-            var combinationSum = 0;
-            for (var j = 0; j < listSize; j++) {
+        let listSize = arr.length, combinationsCount = (1 << listSize)
+        for (let i = 1; i < combinationsCount; i++) {
+            let combinationSum = 0;
+            for (let j = 0; j < listSize; j++) {
                 if (i & (1 << j)) { combinationSum += arr[j]; }
             }
             if (n === combinationSum) { return true; }
@@ -241,7 +246,7 @@ class Game extends React.Component {
     }
 
     resetGame(){
-        this.replaceState(this.getInitialState());
+        this.setState(this.getInitState());
     }
 
     render() {
@@ -251,11 +256,10 @@ class Game extends React.Component {
         let usedNumbers = this.state.usedNumbers;
         let redraws = this.state.redraws;
         let doneStatus = this.state.doneStatus;
-        let resetGame = this.state.resetGame;
         let bottomFrame;
 
         if (doneStatus) {
-            bottomFrame = <DoneFrame doneStatus={doneStatus} resetGame={resetGame}/>
+            bottomFrame = <DoneFrame doneStatus={doneStatus} resetGame={this.resetGame}/>
         } else {
             bottomFrame = <NumbersFrame selectedNumbers={selectedNumbers}
                 selectNumber={this.selectNumber}
