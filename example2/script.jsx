@@ -7,6 +7,7 @@ class Card extends React.Component {
         super(props);
         this.state = {};
     }
+
     componentDidMount() {
         $.get(`http://api.github.com/users/${this.props.login}`, data => this.setState(data));
     }
@@ -25,19 +26,19 @@ class Card extends React.Component {
 class Form extends React.Component {
     constructor(props) {
         super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit(e){
+    handleSubmit(e) {
         e.preventDefault();
         let loginInput = this.refs.login;
         this.props.addCard(loginInput.value);
         loginInput.value = '';
     }
-    render(){
-        return(
-            <form onSubmit={this.handleSubmit}>
-                <input placeholder="github login" ref="login"/>
+
+    render() {
+        return (
+            <form onSubmit={(e) => this.handleSubmit(e)}>
+                <input placeholder="github login" ref="login" />
                 <button>Add</button>
             </form>
         );
@@ -52,12 +53,13 @@ class Main extends React.Component {
         };
         this.addCard = this.addCard.bind(this);
     }
-    addCard(loginToAdd){
-        this.setState({logins: this.state.logins.concat(loginToAdd)});
-    }    
+
+    addCard(loginToAdd) {
+        this.setState({ logins: this.state.logins.concat(loginToAdd) });
+    }
 
     render() {
-        let cards = this.state.logins.map(function(login){
+        let cards = this.state.logins.map(function (login) {
             return (<Card key={login} login={login} />);
         });
         return (
