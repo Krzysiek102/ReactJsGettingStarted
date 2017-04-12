@@ -1,28 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-class Button extends React.Component {
-    constructor(props) {
-        super(props);
-        this.localHandleClick = this.localHandleClick.bind(this);
-    }
-
-    localHandleClick() {
-        this.props.localHandleClick(this.props.increment);
-    }
-    render() {
-        return (
-            <button onClick={this.localHandleClick}>+{this.props.increment}</button>
-        )
-    }
+function Button(props) {
+    return (
+        <button onClick={() => props.localHandleClick(props.increment)}>
+            +{props.increment}
+        </button>
+    )
 }
 
-class Result extends React.Component {
-    render() {
-        return (
-            <div>{this.props.localCounter}</div>
-        );
-    }
+function Result(props) {
+    return (
+        <div>{props.localCounter}</div>
+    );
 }
 
 class Main extends React.Component {
@@ -51,4 +41,7 @@ class Main extends React.Component {
     }
 }
 
-ReactDOM.render(<Main />, document.getElementById("root"));
+ReactDOM.render(
+    <Main />,
+    document.getElementById("root")
+);
