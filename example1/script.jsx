@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 function Button(props) {
     return (
-        <button onClick={() => props.localHandleClick(props.increment)}>
+        <button onClick={() => props.onClick()}>
             +{props.increment}
         </button>
     )
@@ -11,17 +11,16 @@ function Button(props) {
 
 function Result(props) {
     return (
-        <div>{props.localCounter}</div>
+        <div>{props.aggregation}</div>
     );
 }
 
 class Main extends React.Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             counter: 0
         };
-        this.handleClick = this.handleClick.bind(this);
     }
     handleClick(increment) {
         this.setState({
@@ -31,11 +30,11 @@ class Main extends React.Component {
     render() {
         return (
             <div>
-                <Button localHandleClick={this.handleClick} increment={1} />
-                <Button localHandleClick={this.handleClick} increment={5} />
-                <Button localHandleClick={this.handleClick} increment={10} />
-                <Button localHandleClick={this.handleClick} increment={100} />
-                <Result localCounter={this.state.counter} />
+                <Button onClick={()=>this.handleClick(1)} increment={1} />
+                <Button onClick={()=>this.handleClick(5)} increment={5} />
+                <Button onClick={()=>this.handleClick(10)} increment={10} />
+                <Button onClick={()=>this.handleClick(100)} increment={100} />
+                <Result aggregation={this.state.counter} />
             </div>
         )
     }
