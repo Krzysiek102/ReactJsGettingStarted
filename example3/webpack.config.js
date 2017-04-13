@@ -4,6 +4,7 @@ var webpack = require('webpack');
 module.exports = {
   entry: './main.js',
   output: { path: __dirname, filename: 'bundle.js' },
+  devServer: { inline: true },
   module: {
     loaders: [
       {
